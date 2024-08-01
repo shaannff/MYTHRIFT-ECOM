@@ -1,0 +1,186 @@
+<script src="sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">
+<%- include('../layouts/adminheader.ejs') %>
+
+  <div class="container-scroller">
+
+    <%- include('../layouts/adminsidebar.ejs') %>
+
+    <div class="container-fluid page-body-wrapper">
+
+        <%- include('../layouts/adminnavbar.ejs') %>
+
+      <!-- partial -->
+
+        <div class="main-panel">
+
+          <div class="content-wrapper ">
+            <div class=" container-fluid  ">
+              <table class="table-bordered  mt-4 table table-active bg-white rounded-2 ">
+                
+
+                     <thead style="background-color: rgb(23, 21, 21);border-radius: 10px;" >
+                      <tr class="text-center ">
+                          <th>No</th>
+                          <th>profile</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                          
+                      </tr>
+                  </thead>
+                  <tbody style="background-color: rgb(62, 57, 57);color: aliceblue;">
+                    
+                    
+
+                 <% if (clint.length > 0) { %>
+                  <%  for(let i =0 ; i < clint.length ; i++ ){  %>
+                              <tr class="text-center ">
+                                  <td><%= i + 1 %></td>
+                                  <td>
+                                    <img width="40" height="40" src= "https://img.icons8.com/color/48/name--v1.png" alt="name--v1"/>
+                                  </td>
+                                  <td><%= clint[i].fullName %></td>
+                                  <td><%= clint[i].email %></td>
+                                  <td>
+                                    <% if(clint[i].is_blocked == false) { %>
+
+                                      <span class="text-success" id="s<%=clint[i]._id%>">Active</span>
+
+                                   
+                                    <% } else { %>
+                                      <span class="text-danger" id="s<%=clint[i]._id%>">Blocked</span>
+                                      <% } %>
+
+
+                                  </td>
+                                  <td>
+                                  
+                                      <% if(clint[i].is_blocked == false) { %>
+                                        <!-- Block Button with Modal -->
+                                        <a type="button" id="buttonn<%=clint[i]._id  %>" class="btn btn-outline-danger btn-fw" data-bs-toggle="modal" data-bs-target="#blockModal<%= i %>">Block</a>
+                                    
+                                        <!-- Block Modal -->
+                                        <div class="modal fade" id="blockModal<%= i %>" tabindex="-1" aria-labelledby="blockModalLabel<%= i %>" aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h5 class="modal-title" id="blockModalLabel<%= i %>">Block User</h5>
+                                                <button type="button" class="btn-close btn-outline-danger " data-bs-dismiss="modal" aria-label="Close">x</button>
+                                              </div>
+                                              <div class="modal-body bg-dark p-5">
+                                                Are you sure you want to block : <span class="text-primary "><%=clint[i].fullname%></span> ?
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-outline-success ">No</button>
+                                                <button type="button"  data-bs-dismiss="modal" onclick="userAction('<%=clint[i]._id%>')" class="btn btn-outline-danger ">Yes</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      <% } else { %>
+                                        <!-- Unblock Button with Modal -->
+                                        <button id="b<%=clint[i]._id  %>"  type="button" class="btn btn-outline-success btn-fw" data-bs-toggle="modal" data-bs-target="#unblockModal<%= i %>">
+                                          Unblock
+                                        </button>
+                                    
+                                        <!-- Unblock Modal -->
+                                        <div class="modal fade" id="unblockModal<%= i %>" tabindex="-1" aria-labelledby="unblockModalLabel<%= i %>" aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h5 class="modal-title" id="unblockModalLabel<%= i %>">Unblock User</h5>
+                                                <button type="button" class="btn-close btn-outline-danger " data-bs-dismiss="modal" aria-label="Close">x</button>
+                                              </div>
+                                              <div class="modal-body bg-dark p-5 ">
+                                                Are you sure you want to unblock : <span class="text-primary "><%=clint[i].fullname%></span> ?
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-outline-danger " data-bs-dismiss="modal">No</button>
+                                                <button type="button" onclick="userAction('<%=clint[i]._id%>')"  class="btn btn-outline-success " data-bs-dismiss="modal">Yes</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      <% } %>
+                           
+                                    
+                            
+                          </td>
+                          
+                      </tr>
+                      <% } %>
+                    
+                          <%  }else{ %>
+                      
+                    
+                  
+                  <tr>
+                      <td colspan="5"> Users Not Found</td>
+                  </tr>
+
+                  <% } %>
+
+                  
+
+                 
+                    
+                  </tbody>
+              </table><!-- End table -->
+              <%- include('../layouts/page.ejs')%>
+
+            </div>
+            
+        
+           
+
+          </div>
+
+        </div>
+
+      </div>
+      
+    </div> <!--End container scroller-->
+    
+    
+    
+    <script>
+      
+ function userAction(id){
+
+   
+   const btn = document.getElementById(`buttonn${id}`);
+
+const status = document.getElementById(`s${id}`);
+
+    if(btn.textContent == 'Block'){
+
+      btn.textContent = 'Unblock'
+      btn.classList.add('btn-outline-success');
+      btn.classList.remove('btn-outline-danger');
+      
+      status.textContent = 'Blocked'
+      status.classList.add('text-danger');
+      status.classList.remove('text-success');
+
+
+    } else {
+      
+      btn.textContent = 'Block'
+      btn.classList.add('btn-outline-danger');
+      btn.classList.remove('btn-outline-success');
+
+      status.textContent = 'Active'
+      status.classList.add('text-success');
+      status.classList.remove('text-danger');
+      
+    }
+
+    fetch(`/admin/userAction?id=${id}` , {method : "POST"})
+
+  }
+    
+</script>
+
+<%- include('../layouts/adminfooter.ejs') %>

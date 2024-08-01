@@ -1,0 +1,72 @@
+<%- include('../layouts/adminheader.ejs') %>
+
+  <div class="container-scroller">
+
+    <%- include('../layouts/adminsidebar.ejs') %>
+
+    <div class="container-fluid page-body-wrapper">
+
+        <%- include('../layouts/adminnavbar.ejs') %>
+
+<body>
+    <div class="container">
+        <h2>User Orders</h2>
+        <div class="order-details row">
+            <div class="col">
+                <div class="row">
+                    <div class="col"><strong>Order ID</strong></div>
+                    <div class="col"><strong>Date</strong></div>
+                    <div class="col"><strong>Payment Method</strong></div>
+                    <div class="col"><strong>Amount</strong></div>
+                    <div class="col"><strong>Details</strong></div>
+                </div>
+            </div>
+        </div>
+        <!-- Loop through orders -->
+        <% orders.forEach((order) =>{ %>
+            <div class="order-details row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col"><%= order._id %></div>
+                        <div class="col"><%= order.order_date %></div>
+                        <div class="col"><%= order.payment %></div>
+                        <div class="col"><%= order.orderAmount %></div>
+                        <div class="col"><a href="/admin/orderDetils?orderId=<%= order._id %>"><button class="btn btn-success">Order Detail</button></a></div>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+        <!-- Repeat the above div for each order -->
+    </div>
+</body>
+
+<style>
+    body {
+        background-color: #000000; /* Light green background */
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    .order-details {
+        border: 1px solid #484646;
+        padding: 20px;
+        box-shadow: 0 4px 8px 0 rgba(232, 224, 224, 0.2);
+        transition: 0.3s;
+        margin-bottom: 20px;
+    }
+
+    .order-details h2 {
+        margin-bottom: 20px;
+    }
+
+    .order-details p {
+        margin-bottom: 10px;
+    }
+
+    .order-details .row {
+        margin-bottom: 10px;
+    }
+</style>
+<%- include('../layouts/adminfooter.ejs') %>

@@ -1,0 +1,129 @@
+<%- include('../layouts/header.ejs') %>
+
+    <div class="page-wrapper">
+	
+	    <%- include('../layouts/navbar-2.ejs') %>
+        <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+               <div class="container">
+                   <ol class="breadcrumb">
+                       <li class="breadcrumb-item"><a href="/homepage">Home</a></li>
+                       <!-- <li class="breadcrumb-item"><a href="#">Pages</a></li> -->
+                       <li class="breadcrumb-item active" aria-current="page">Login</li>
+                       <li class="breadcrumb-item active" aria-current="page">forget Password</li>
+                   </ol>
+               </div><!-- End .container -->
+           </nav><!-- End .breadcrumb-nav -->
+           <div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17" style="background-image: url('assets/images/mythrift/show.jpg')">
+            <div class="container">
+                <div class="form-box">
+                    <div class="form-tab">
+                        <ul class="nav nav-pills nav-fill" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active " id="signin-tab-2" data-toggle="tab" href="#signin-2" role="tab" aria-controls="signin-2" aria-selected="false">Login</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div class="tab-pane show active" id="signin-2" role="tabpanel" aria-labelledby="signin-tab-2">
+
+                                <form action="/forgotpass" method="post" id="emailform" >
+                                    
+                                    <div class="text-center">
+                                        <% if(locals.msg) {%>
+
+                                            <%= msg %>
+
+                                                <% } %>
+                                    </div>
+                                    <div class="form-group">
+                                        
+                                        <label for="singin-email-2">Enter email address *</label>
+                                         <!-- <p id="msg" hidden></p>    -->
+                                        <input type="text" class="form-control" id="email" name="email"  style="background-color: hsla(0, 6%, 46%, 0.416);">
+                                        <div style="height: 20px;">
+                                            <p class="error-message text-danger" id="email-error"></p>
+                                        </div>
+
+
+                                    </div><!-- End .form-group -->
+
+                                   
+
+                                    <div class="form-footer justify-content-center ">
+                                        <button type="submit" class="btn btn-outline-primary-2">
+                                            <span>submit</span>
+                                            <i class="icon-long-arrow-right"></i>
+                                        </button>
+
+                                        
+                                       
+                                    </div><!-- End .form-footer -->
+                                    
+                                </form>
+                               <!-- End .form-choice -->
+                            </div><!-- .End .tab-pane -->
+                        </div><!-- End .tab-content -->
+                    </div><!-- End .form-tab -->
+                </div><!-- End .form-box -->
+            </div><!-- End .container -->
+        </div>
+
+
+        </main>
+
+		<!-- Connect Footer -->
+		<%- include('../layouts/footbar-2') %>
+		<!-- Connect Footer -->
+     
+    </div><!-- End .page-wrapper -->
+
+
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+		<!--Connect Mobaile View-->
+        <%- include('../layouts/mobileView.ejs') %>
+		<!--Connect Mobaile View-->
+
+    <!-- Plugins JS File -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/jquery.hoverIntent.min.js"></script>
+    <script src="assets/js/jquery.waypoints.min.js"></script>
+    <script src="assets/js/superfish.min.js"></script>
+    <script src="assets/js/owl.carousel.min.js"></script>
+    <!-- Main JS File -->
+    <script src="assets/js/main.js"></script>
+	
+    <script>
+
+        const msg = document.getElementById('msg')
+        if(msg.textContent=='not verified'){
+            Swal.fire({
+            title: 'error',
+            text: 'Invalid email...!',
+            icon: 'error',
+            confirmButtonText: 'OK'})
+        }
+        // validation
+        document.getElementById('emailform').addEventListener("submit",function(event){
+            const email = document.getElementById('email').value
+            const error = document.getElementById('email-error')
+            var valid = true;
+
+            error.textContent=""
+            
+            if(!email.endsWith("@gmail.com")){
+                error.textContent="Enter valid email with'@gmail.com'" 
+                valid = false;
+            }
+            if (!valid) {
+            event.preventDefault();
+        }
+        })
+
+
+
+    </script>
+	
+    <%- include('../layouts/footer.ejs')%>

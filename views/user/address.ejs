@@ -1,0 +1,506 @@
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+<%- include('../layouts/header') %>
+
+<div class="page-wrapper">	    
+    
+    <%- include('../layouts/navbar-2.ejs') %>
+
+
+    <main class="main">
+        <div class="page-header text-center" style="background-color: rgba(236, 236, 224, 0.379);">
+            <div class="container">
+                <h1 class="page-title">My Profile</h1>
+            </div><!-- End .container -->
+        </div><!-- End .page-header -->
+        <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+            <div class="container">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="">Home</a></li>
+                    
+                    <li class="breadcrumb-item active" aria-current="page">Address</li>
+                </ol>
+            </div><!-- End .container -->
+        </nav><!-- End .breadcrumb-nav -->
+
+        <div class="page-content">
+            <div class="dashboard">
+                <div class="container">
+                    <div class="row">
+                        <aside class="col-md-4 col-lg-3">
+                            <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link " id="tab-dashboard-link" href="/profile"> My Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders" role="tab" aria-controls="tab-orders" aria-selected="false">Orders</a>
+                                </li>
+                                <li class="nav-item">
+                                    <!-- <a class="nav-link" id="tab-downloads-link" data-toggle="tab" href="#tab-downloads" role="tab" aria-controls="tab-downloads" aria-selected="false">Wishlist</a> -->
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="tab-address-link" href="/Address" >Adress</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="tab-wallet-link" data-toggle="tab" href="/wallet">Wallet</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="tab-coupons-link"  href="/coupons" >Coupons</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/logout">Sign Out</a>
+                                </li>
+                            </ul>
+                        </aside><!-- End .col-lg-3 -->
+
+                        <div class="col-md-8 col-lg-9">
+
+                            <div class="tab-content">
+
+                                <!--address-->
+                                
+                                <div class="" id="tab-address">
+                                  <div class="container-fluid px-3 d-flex justify-content-end ">
+
+                                      <button type="button" class="btn btn-primary mb-3 " data-bs-toggle="modal" data-bs-target="#address" data-bs-whatever="@mdo">Add Address</button>
+
+                                        <!-- Modal For Address Add-->
+
+                                        <div class="modal fade" id="address" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">   <!-- Add Addres Modal -->
+
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+
+                                              <div class="modal-header">
+                                                <h6 class="modal-title " id="exampleModalLabel">Add Address</h6>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                              </div>
+
+                                              <div class="modal-body">
+                                                <form  style="padding-left: 15px;padding-right: 15px;"  id="addform">
+                                                    <div class="mb-3">
+                                                        <label for="address" class="col-form-label text-black">Address :</label>
+                                                        <input type="text" class="form-control" name="address"  id="address" placeholder="Enter your Address">
+                                                        <div class="h-25"><p class="text-danger " id="errAD"></p></div>
+                                                    </div>
+                                                    
+                                                    <div class="mb-3">
+                                                        <label for="city" class="col-form-label text-black">City :</label>
+                                                        <input type="text" class="form-control" name="city"  id="city" placeholder="Enter your City Name">
+                                                        <div class="h-25"><p id="cityError"></p></div>
+                                                    </div>
+                                                    
+                                                    <div class="mb-3">
+                                                        <label for="state" class="col-form-label text-black">State :</label>
+                                                        <input type="text" class="form-control" name="state"  id="state" placeholder="Enter your State">
+                                                        <div class="h-25"><p id="stateError"></p></div>
+                                                    </div>
+                                                    
+                                                    <div class="mb-3 d-flex">
+                                                        <div>
+                                                            <label for="pincode" class="col-form-label text-black">Pincode :</label>
+                                                            <input type="text" class="form-control w-75"  name="pincode" id="pincode" placeholder="Pincode">
+                                                            <div class="h-25"><p id="pincodeError"></p></div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="pincode" class="col-form-label text-black">Phone :</label>
+                                                            <input type="text" class="form-control w-100"  name="phone" id="phone" placeholder="Phone number">
+                                                            <div class="h-25"><p id="phoneError"></p></div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    
+                                                </form>
+                                                <div class="modal-footer">
+                                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                  <button type="submit" class="btn btn-primary"  id="submitBtn" onclick="addAddress('<%= userdata._id %>')">Add</button>
+                                                </div>
+                                              
+                                              </div>
+
+
+                                            </div>
+                                          </div>
+
+                                        </div>
+
+                                    </div>
+                                    
+                                        
+                                    
+                                    <div class="row  ">
+                                    <% if(addressList!==null &&  addressList.addresss.length!==0) { %>
+
+                                     <% for(let i=0; i<addressList.addresss.length;i++){ %>
+                                        <div class="col-lg-6">
+
+                                            <div class="card card-dashboard">
+
+                                                
+                                                <div class="card-body">
+                                                    <input type="checkbox" class="card-checkbox">
+                                                    <button type="button" class="close" aria-label="Close" onclick="deleteAddress('<%= userdata._id %>','<%= addressList.addresss[i]._id %>')" style="font-size: 25px;padding-bottom: 20px;">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <h3 class="card-title">Address</h3><!-- End .card-title -->
+
+                                                    <p><%= addressList.addresss[i].userName %><br>
+                                                    <%= addressList.addresss[i].name %><br>
+                                                    <%= addressList.addresss[i].city%><br>
+                                                    <%= addressList.addresss[i].state %><br>
+                                                    <%= addressList.addresss[i].pincode %><br>
+                                                    <%= addressList.addresss[i].phone %><br>
+                                                    <a style="cursor: pointer; color: rgb(207, 149, 77);" data-bs-toggle="modal" data-bs-target="#addressEditModal" onclick="editAddress('<%=addressList.addresss[i]._id%>')">Edit <i class="icon-edit"></i></a></p>
+
+                                                <!-- edit modal -->
+                                                <div class="modal fade" id="addressEditModal" tabindex="-1" aria-labelledby="exampleaddresseditl" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h6 class="modal-title" id="exampleaddressedit">Edit Address</h6>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p id="msg" hidden><%= msg %></p>
+                                                                <form action="/updateaddress" method="post" style="padding-left: 15px;padding-right: 15px;" id="editForm">
+                                                                    <div class="mb-3">
+                                                                        <label for="Editaddress" class="col-form-label text-black">Address :</label>
+                                                                        <input type="text" class="form-control" name="address" id="Editaddress" placeholder="Enter your Address" oninput="validateAddress()">
+                                                                        <div class="h-25"><p class="text-danger" id="errAD"></p></div>
+                                                                    </div>
+                                                                    <div class="mb-3">
+                                                                        <label for="city" class="col-form-label text-black">City :</label>
+                                                                        <input type="text" class="form-control" name="city"  id="editcity" placeholder="Enter your City Name" oninput="validateCity()">
+                                                                        <div class="h-25"><p id="cityError"></p></div>
+                                                                    </div>
+                                                                    <div class="mb-3">
+                                                                        <label for="state" class="col-form-label text-black">State :</label>
+                                                                        <input type="text" class="form-control" name="state"  id="editstate" placeholder="Enter your State" oninput="validateState()">
+                                                                        <div class="h-25"><p id="stateError"></p></div>
+                                                                    </div>
+                                                                    <div class="mb-3 d-flex">
+                                                                        <div>
+                                                                            <label for="pincode" class="col-form-label text-black">Pincode :</label>
+                                                                            <input type="text" class="form-control w-75"  name="pincode" id="editpincode" placeholder="Pincode" oninput="validatePincode()">
+                                                                            <div class="h-25"><p id="pincodeError"></p></div>
+                                                                        </div>
+                                                                        <div>
+                                                                            <label for="pincode" class="col-form-label text-black">Phone :</label>
+                                                                            <input type="text" class="form-control w-100"  name="phone" id="editphone" placeholder="Phone number" oninput="validatePhone()">
+                                                                            <div class="h-25"><p id="phoneError"></p></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <input type="hidden" name="id" id="id">
+                                                                    <!-- Other input fields -->
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                        <button type="submit" id="updateButton" class="btn btn-primary" disabled>Update</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                 
+                                                 </div><!-- End .card-body -->
+
+                                            </div><!-- End .card-dashboard -->
+
+                                        </div><!-- End .col-lg-6 -->
+
+                                        
+                                    
+                               <% } %>
+                               <% }else if(addressList==null || addressList.addresss.length==0){ %>
+
+
+                                <div class="text-center"><p class="text-black  py-5 ">click The Add Address Button to add Address...!</p></div>
+                                
+                                
+                                <% } %>
+                                </div><!--row End-->
+                                </div><!-- .End .tab-pane -->
+
+                                <!--address End-->
+
+                            </div> <!--tab content-->
+                        </div><!-- End .col-lg-9 -->
+                    </div><!-- End .row -->
+                </div><!-- End .container -->
+            </div><!-- End .dashboard -->
+        </div><!-- End .page-content -->
+
+    </main><!-- End .main -->
+
+
+<%- include('../layouts/footbar-2') %>
+<!-- Connect Footer -->
+
+</div><!-- End .page-wrapper -->
+<button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+<%- include('../layouts/mobileView.ejs') %>
+<!-- 
+<script>
+    // Function to validate the form
+    function validateForm() {
+        var address = document.getElementById("address").value;
+        var city = document.getElementById("city").value;
+        var state = document.getElementById("state").value;
+        var pincode = document.getElementById("pincode").value;
+        var phone = document.getElementById("phone").value;
+
+        // Perform validation checks here
+        // For example, you can check if the fields are empty or meet certain criteria
+
+        // Example: Checking if the address field is empty
+        if (address.trim() === "") {
+            document.getElementById("errAD").innerHTML = "Please enter your address";
+            return false; // Prevent form submission
+        }
+
+        // You can add more validation checks for other fields similarly
+
+        // If all validation passes, return true to allow form submission
+        return true;
+    }
+
+    // Add event listener to the form submit event
+    document.getElementById("addform").addEventListener("submit", function(event) {
+        // Prevent form submission if validation fails
+        if (!validateForm()) {
+            event.preventDefault();
+        }
+    });
+</script> -->
+
+
+
+<script>
+    // add address
+    function addAddress(id){
+        const form = document.getElementById('addform')
+        const formdata = new FormData(form)
+        const address = {}
+        formdata.forEach((val,i)=>{
+            address[i]=val
+    })
+    console.log(address)
+
+    fetch(`/addAddress?id=${id}`,{method:"POST",headers: {'Content-Type' : 'application/json'},body:JSON.stringify({address})
+}).then(res => res.json()
+    .then(data => {
+        console.log(data);
+        if(data.succes){
+            Swal.fire({
+                title:'Address Added',
+                text:'Address Added Successfully',
+                icon:'success',
+                confirmButtonText: 'OK'
+    })
+    .then((result) => {
+        
+        window.location.reload()
+     
+    })
+    }else{
+        Swal.fire({
+            title:'Failed',
+            text:'Address Adding failed',
+            icon:'error',
+            confirmButtonText: 'OK'
+            
+        }).then((result) => {
+            
+            window.location.reload()
+            
+        })
+    }
+}))
+
+
+}
+
+// Edit address
+function  editAddress(input){
+    console.log(input);
+const add= document.getElementById('Editaddress')
+const City = document.getElementById('editcity')
+const State = document.getElementById('editstate')
+const pin = document.getElementById('editpincode')
+const PHONE = document.getElementById('editphone')
+const Id = document.getElementById('id')
+fetch(`/editaddresss`,{method:'put',headers:{'Content-Type':'application/json'},body:JSON.stringify({edit:input})})
+.then(res => res.json())
+.then(data => {
+    
+    const {name,city,state,pincode,phone,_id } = data.editdata.addresss[0]
+    console.log(name  ,city,phone)
+    
+    add.value = name
+    City.value =city
+    State.value =state
+    pin.value = pincode
+    PHONE.value = phone
+    Id.value =_id
+
+
+})
+console.log(add.value,City.value,State.value+'ghgh');
+}
+
+
+
+// // data validation 
+// const button = document.getElementById('submitBtn')
+//  button.disabled = true  
+// function validation(e){
+//     const err =document.getElementById('errAD')
+
+//     let addressRegex = /^[A-Za-z\s]+$/;
+//     if(e.value.length>4){
+       
+//        err.textContent=''
+//        button.disabled = false 
+       
+//     }else{
+//         err.textContent='minimum 4 required'
+//         return false
+//     }
+    
+// }
+function deleteAddress(id,addrs){
+    console.log('heey')
+
+fetch(`/deleteAddress?id=${id}&&address=${addrs}`,{ method:'post'})
+.then(data =>{
+    window.location.reload()
+})
+}
+
+// datacheck
+
+// function datacheck(val){
+// const err = document.getElementById('ad')
+
+
+
+// }
+
+
+//sweet alert
+const msg = document.getElementById('msg')
+if(msg.textContent=='success'){
+    let timerInterval;
+Swal.fire({
+  title: "Address updating...!",
+  html: "It will Update in <b></b> milliseconds.",
+  timer: 2000,
+  timerProgressBar: true,
+  didOpen: () => {
+    Swal.showLoading();
+    const timer = Swal.getPopup().querySelector("b");
+    timerInterval = setInterval(() => {
+      timer.textContent =` ${Swal.getTimerLeft()}`;
+    }, 100);
+  },
+  willClose: () => {
+    clearInterval(timerInterval);
+  }
+}).then((result) => {
+  if (result.dismiss === Swal.DismissReason.timer) {
+    console.log("I was closed by the timer");
+  }
+});
+}else if(msg.textContent=='failed'){
+    Swal.fire({
+            title:'Failed',
+            text:'Address updating failed',
+            icon:'error',
+            confirmButtonText: 'OK'
+            
+        }).then((result) => {
+            
+            window.location.reload()
+            
+        })
+}
+
+</script>
+<script>
+    function validateAddress() {
+    var address = document.getElementById('Editaddress').value.trim(); // Remove leading and trailing spaces
+    var errorElement = document.getElementById('errAD');
+    if (address.length < 4 || !/^[a-zA-Z]+(?:\s[a-zA-Z]+)*$/.test(address)) {
+        errorElement.textContent = 'Address should be at least 4 characters long and contain only letters with spaces allowed in between.';
+        document.getElementById('updateButton').disabled = true;
+    } else {
+        errorElement.textContent = '';
+        document.getElementById('updateButton').disabled = false;
+    }
+}
+
+
+    function validateCity() {
+    var city = document.getElementById('editcity').value.trim(); // Remove leading and trailing spaces
+    var errorElement = document.getElementById('cityError');
+    if (city.length < 4 || !/^[a-zA-Z]+(?:\s[a-zA-Z]+)*$/.test(city)) {
+        errorElement.textContent = 'City should only contain letters with spaces allowed in between.';
+        document.getElementById('updateButton').disabled = true;
+    } else {
+        errorElement.textContent = '';
+        document.getElementById('updateButton').disabled = false;
+    }
+}
+
+
+    function validateState() {
+        var state = document.getElementById('editstate').value;
+        var errorElement = document.getElementById('stateError');
+        if (!/^[a-zA-Z]+$/.test(state)) {
+            errorElement.textContent = 'State should only contain letters.';
+            document.getElementById('updateButton').disabled = true;
+        } else {
+            errorElement.textContent = '';
+            document.getElementById('updateButton').disabled = false;
+        }
+    }
+
+    function validatePincode() {
+        var pincode = document.getElementById('editpincode').value;
+        var errorElement = document.getElementById('pincodeError');
+        if (!/^\d{6}$/.test(pincode)) {
+            errorElement.textContent = 'Pincode must be 6 digits.';
+            document.getElementById('updateButton').disabled = true;
+        } else {
+            errorElement.textContent = '';
+            document.getElementById('updateButton').disabled = false;
+        }
+    }
+
+    function validatePhone() {
+        var phone = document.getElementById('editphone').value;
+        var errorElement = document.getElementById('phoneError');
+        if (!/^\d{10}$/.test(phone)) {
+            errorElement.textContent = 'Phone number must be 10 digits .';
+            document.getElementById('updateButton').disabled = true;
+        } else {
+            errorElement.textContent = '';
+            document.getElementById('updateButton').disabled = false;
+        }
+    }
+
+
+</script>
+
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/jquery.hoverIntent.min.js"></script>
+<script src="assets/js/jquery.waypoints.min.js"></script>
+<script src="assets/js/superfish.min.js"></script>
+<script src="assets/js/owl.carousel.min.js"></script>
+<!-- Main JS File -->
+<script src="assets/js/main.js"></script>
+
+
+<%- include('../layouts/footer.ejs') %>

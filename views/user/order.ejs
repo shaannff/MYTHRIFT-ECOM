@@ -1,0 +1,180 @@
+<%- include('../layouts/header.ejs') %>
+
+
+<div class="page-wrapper">
+	
+	<%- include('../layouts/navbar-2.ejs') %>
+    <main class="main">
+        <div class="page-header text-center" style="background-color: rgba(236, 236, 224, 0.379);">
+            <div class="container">
+                <h1 class="page-title">Orders</h1>
+            </div><!-- End .container -->
+        </div><!-- End .page-header -->
+        <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+            <div class="container">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="">Home</a></li>
+                    
+                    <li class="breadcrumb-item active" aria-current="page">Orders</li>
+                </ol>
+            </div><!-- End .container -->
+        </nav><!-- End .breadcrumb-nav -->
+        <div class="page-content">
+            <div class="dashboard">
+                <div class="container">
+                    <div class="row">
+                        <aside class="col-md-4 col-lg-3">
+                            <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link " id="tab-dashboard-link" href="/profile"> My Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="tab-orders-link" href="/orders" >Orders</a>
+                                </li>
+                               
+                                <li class="nav-item">
+                                    <a class="nav-link " id="tab-address-link" href="/Address" >Adresses</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="tab-wallet-link" href="/wallet">Wallet</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="tab-coupons-link"  href="/coupons" >Coupons</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/logout">Sign Out</a>
+                                </li>
+                            </ul>
+                        </aside><!-- End .col-lg-3 -->
+                        <div class="col-md-8 col-lg-9">
+
+                            <div class="tab-content">
+    
+                                 <aside class="col col-xl-9 col-lg-8 col-md-6 col-sm-6 mb-4 mb-lg-0">
+    
+                                    <div class="row w-100" style="gap: 2rem">
+    
+                                        <div class="container">
+    
+                                        <table class="table table-wishlist table-mobile text-center " style="width: 920px">
+    
+                                            <thead>
+    
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Order ID</th>
+                                                
+                                                <th>Method</th>
+                                                <th>Total price</th>
+                                                <th>Detailes</th>
+                                            </tr>
+    
+                                            </thead>
+    
+                                        <tbody class="text-center ">
+                                            <% if (Array.isArray(orderData)) { %>
+
+                                        <% if(locals.orderData) {%> <% orderData.forEach((orders, index)=>{ %>
+                                            <tr>
+                                                <td><%= index+1 %></td>
+    
+                                                <td class="">#MYTHOR<%= index+100 %></td>
+    
+                                               
+    
+                                                <td  class="price-col"><p><%= orders.payment %></p></td>
+    
+                                                <td class="price-col">$<%= orders.orderAmount %></td>
+    
+                                                <td>
+    
+                                                <a
+                                                    href="/orderDetails?id=<%= orders._id  %>"
+                                                    style="
+                                                    border-radius: 5px;
+                                                    border: 0px solid transparent;
+                                                    outline: 0px;
+                                                    transition: all ease 0.5s;
+                                                    background-color: #c96;
+                                                    "
+                                                    class="p-3 rounded-2 text-white">Details</a>  
+    
+                                                </td>
+    
+                                        </tr>
+    
+                                    <% })}else{ %>
+                                        <p>wertyuiookjh</p>
+                                        <% } %>
+                                    <% } %>
+
+    
+                                    </tbody>
+    
+                                </table>
+    
+                                <% if (Array.isArray(orderData)) { %>
+    
+                                    <div class="wishlist-share">
+    
+                                        <div class="social-icons social-icons-sm mb-2"> 
+    
+                                        <label class="social-label text-info ">Total Order:</label>
+    
+                                        <p class="text-warning "><%= orderData.length %></p>
+    
+                                        </div>
+    
+                                        <!-- End .soial-icons -->
+    
+                                    </div>
+    
+                                <% }else{ %>
+    
+                                    <!-- <div class="wishlist-share">
+    
+                                        <div class="social-icons social-icons-sm mb-2">
+                                        <label class="social-label">Total Order:</label>0</div> -->
+                                        
+                                        <!-- End .soial-icons -->
+                                    <!-- </div> -->
+    
+                                <% } %>
+    
+                                </div>
+    
+                            </div>
+    
+                        </aside>
+    
+                                  </div>
+    
+                              </div><!-- End .col-lg-9 -->
+                        
+                    </div><!-- End .row -->
+                </div><!-- End .container -->
+            </div><!-- End .dashboard -->
+        </div>
+    </main><!-- End .main -->
+
+
+    <%- include('../layouts/footbar-2') %>
+    <!-- Connect Footer -->
+    
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+    
+    <%- include('../layouts/mobileView.ejs') %>
+
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/jquery.hoverIntent.min.js"></script>
+<script src="assets/js/jquery.waypoints.min.js"></script>
+<script src="assets/js/superfish.min.js"></script>
+<script src="assets/js/owl.carousel.min.js"></script>
+<!-- Main JS File -->
+<script src="assets/js/main.js"></script>
+
+
+<%- include('../layouts/footer.ejs') %>

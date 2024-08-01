@@ -1,0 +1,599 @@
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+  integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+<%- include('../layouts/header.ejs') -%>
+
+  <div class="page-wrapper">
+
+    <%- include('../layouts/navbar-2.ejs') %>
+
+
+      <main class="main">
+        <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+          <div class="container">
+            <h1 class="page-title">My Profile</h1>
+          </div><!-- End .container -->
+        </div><!-- End .page-header -->
+        <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+          <div class="container">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="">Home</a></li>
+
+              <li class="breadcrumb-item active" aria-current="page">My Profile</li>
+            </ol>
+          </div><!-- End .container -->
+        </nav><!-- End .breadcrumb-nav -->
+
+        <div class="page-content">
+          <div class="dashboard">
+            <div class="container">
+              <div class="row">
+                <aside class="col-md-4 col-lg-3">
+                  <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="tab-dashboard-link" data-toggle="tab" href="#tab-dashboard"
+                        role="tab" aria-controls="tab-dashboard" aria-selected="true"> My Profile</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="tab-orders-link"  href="/orders" >Orders</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="tab-downloads-link" data-toggle="tab" href="#tab-downloads" role="tab"
+                        aria-controls="tab-downloads" aria-selected="false">Wishlist</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link"  id="tab-address-link" href="/Address">Adresses</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="tab-wallet-link" href="/wallet">Wallet</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="tab-coupons-link" href="/coupons">Coupons</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/logout">Sign Out</a>
+                    </li>
+                  </ul>
+                </aside><!-- End .col-lg-3 -->
+
+                <div class="col-md-8 col-lg-9">
+                  <div class="tab-content">
+                    <!--my profile-->
+                    <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel"
+                      aria-labelledby="tab-dashboard-link">
+                      <div class="col col-lg-11 mb-4 mb-lg-0">
+                        <div class="card mb-3" style="border-radius: 0.5rem">
+                          <div class="row g-0">
+                            <div class="container-fluid d-flex  justify-content-end mt-2 me-5 ">
+                              <% if(msg){ %>
+                                <p id="msg" hidden>
+                                  <%= msg %>
+                                </p>
+                                <% } %>
+                                  <form action="/logout" method="post">
+                                    <button
+                                      class="bg-transparent border-0 d-flex align-items-center justify-content-center">
+
+                                      <h6 type="submit">
+                                        <i class="ri-logout-circle-line" style="cursor: pointer"></i>
+                                      </h6>
+                                    </button>
+                                  </form>
+
+
+                            </div>
+                            <div
+                              class="col-md-4 d-flex flex-column align-items-center justify-content-center gap-2 gradient-custom text-center text-white"
+                              style="
+                                                border-top-left-radius: 0.5rem;
+                                                border-bottom-left-radius: 0.5rem;
+                                                padding-top: 5rem;
+                                              ">
+                              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                alt="Avatar" class="img-fluid" style="width: 80px" />
+                              <p class="fs-3 text-black ">
+                                <%= userdata.fullName %>
+                              </p>
+
+                            </div>
+                            <div class="col-md-8">
+                              <div class="card-body p-4">
+
+                                <div class="row pt-1">
+                                  <div class="col-6 mb-3">
+                                    <h6>Name</h6>
+                                    <p>
+                                      <%=userdata.fullName%>
+                                    </p>
+                                  </div>
+                                  <div class="col-6 mb-3">
+                                    <h6>Contact</h6>
+                                    <p>
+                                      <%=userdata.phone %>
+                                    </p>
+                                  </div>
+                                </div>
+
+
+
+                                <hr class="mt-0 mb-4" />
+                                <div class="row pt-1">
+                                  <div class="col-7 mb-3">
+                                    <h6>Email</h6>
+                                    <p>
+                                      <%=userdata.email %>
+                                    </p>
+                                  </div>
+                                  <div class="col-8 mb-3 d-flex">
+                                    <!--button-->
+                                    <button type="button" class="btn btn-primary ms-4  btn-icon-text"
+                                      data-bs-toggle="modal" data-bs-target="#pass">Change&nbsp;password</button>
+                                    <!--cangepassword-->
+
+                                    <div class="modal fade" id="pass" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                      aria-hidden="true">
+                                      <div class="modal-dialog">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Edit profile</h5>
+                                            <button type="button" class="btn-close btn-outline-danger"
+                                              data-bs-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body">
+                                            <form 
+                                              id="editPasswordForm" class="px-5"
+                                              enctype="application/x-www-form-urlencoded">
+                                              <div class="mb-2">
+                                                <label for="userName" class="col-form-label">Old Password</label>
+                                                <input type="password" class="form-control"  id="oldPass" name="oldPass">
+                                              </div>
+                                              <div class="mb-2">
+                                                <label for="userName" class="col-form-label">New Password</label>
+                                                <input type="password" class="form-control" id="newPass" name="newPass">
+                                              </div>
+                                              <div class="mb-2">
+                                                <label for="userPhone" class="col-form-label">Confirm Password</label>
+                                                <input type="password" class="form-control" id="confmPass" name="confmPass">
+                                                <div class="error text-danger text-center " id="passwordError"></div>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-outline-danger"
+                                                  data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-outline-success"
+                                                  onclick="changepass('<%= userdata._id %>',event)"
+                                                  id="savePasswordButton">Save</button>
+                                              </div>
+                                            </form>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <!--password end-->
+
+                                    <!--edit profile-->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1"
+                                      aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Edit profile</h5>
+                                            <button type="button" class="btn-close btn-outline-danger"
+                                              data-bs-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body">
+                                            <form id="editProfileForm" class="px-5"
+                                              enctype="application/x-www-form-urlencoded">
+                                              <div class="mb-3">
+                                                <label for="userName" class="col-form-label">Name</label>
+                                                <input type="text" class="form-control" name="name" id="user"
+                                                  value="<%= userdata.fullName %>">
+                                                <div class="error text-danger " id="nameError"></div>
+                                              </div>
+                                              <div class="mb-3">
+                                                <label for="userPhone" class="col-form-label">Contact</label>
+                                                <input type="text" class="form-control" name="phones" id="phone"
+                                                  value="<%= userdata.phone %>">
+                                                <div class="error text-danger" id="phoneError"></div>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-outline-danger"
+                                                  data-bs-dismiss="modal">Cancel</button>
+                                                <button class="btn btn-outline-success"
+                                                  onclick="editprofile('<%=userdata._id %>',event)"
+                                                  id="saveButton">Save</button>
+                                              </div>
+                                            </form>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary ms-4  btn-icon-text"
+                                      data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                      <i class="mdi mdi-upload btn-icon-prepend"></i>Edit&nbsp;profile<i
+                                        class="far fa-edit"></i>
+                                    </button>
+                                  </div>
+                                </div>
+
+
+
+
+                                <div class="d-flex justify-content-start">
+                                  <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
+                                  <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
+                                  <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+                    </div><!-- .End .tab-pane -->
+                    <!--my profile End-->
+                    <!-- Orders -->
+                    <div class="tab-pane fade" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders-link">
+                      <p>No order has been made yet.</p>
+                      <a href="category.html" class="btn btn-outline-primary-2"><span>GO SHOP</span><i
+                          class="icon-long-arrow-right"></i></a>
+                    </div><!-- .End .tab-pane -->
+                    <!-- Orders End -->
+                    <!--whishlist-->
+                    <div class="tab-pane fade" id="tab-downloads" role="tabpanel" aria-labelledby="tab-downloads-link">
+                      <p>No downloads available yet.</p>
+                      <a href="category.html" class="btn btn-outline-primary-2"><span>GO SHOP</span><i
+                          class="icon-long-arrow-right"></i></a>
+                    </div><!-- .End .tab-pane -->
+                    <!--whishlist End -->
+                    <!--address-->
+                    <div class="tab-pane fade" id="tab-address" role="tabpanel" aria-labelledby="tab-address-link">
+                      <div class="container-fluid px-3 d-flex justify-content-end ">
+
+
+                        <button type="button" class="btn btn-primary mb-3 " data-bs-toggle="modal"
+                          data-bs-target="#address" data-bs-whatever="@mdo">ADD Address</button>
+                        <!--modal for address ADD-->
+                        <div class="modal fade" id="address" tabindex="-1" aria-labelledby="exampleModalLabel"
+                          aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Address</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                  aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <form style="padding-left: 15px;padding-right: 15px;" id="addform">
+
+                                  <div class="mb-3">
+                                    <label for="address" class="col-form-label text-black ">Address:</label>
+                                    <input type="text" class="form-control" name="address" oninput="validate()" id="ad"
+                                      placeholder="Enter your Address">
+                                    <p id="add"></p>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="city" class="col-form-label text-black">City:</label>
+                                    <input type="text" class="form-control" name="city" id="city"
+                                      placeholder="Enter your City Name">
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="state" class="col-form-label text-black">State:</label>
+                                    <input type="text" class="form-control" name="state" id="state"
+                                      placeholder="Enter your State Name">
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="pincode" class="col-form-label text-black">Pincode:</label>
+                                    <input type="text" class="form-control" name="pincode" id="pincode"
+                                      placeholder="Enter your pincode">
+                                  </div>
+
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                      data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                      onclick="addform('<%= userdata._id %>')">Add</button>
+                                  </div>
+                              </div>
+                              </form>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--modal close-->
+
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="card card-dashboard">
+                            <div class="card-body">
+                              <h3 class="card-title">Billing Address</h3><!-- End .card-title -->
+
+                              <p>User Name<br>
+                                User Company<br>
+                                John str<br>
+                                New York, NY 10001<br>
+                                1-234-987-6543<br>
+                                yourmail@mail.com<br>
+                                <a href="#">Edit <i class="icon-edit"></i></a>
+                              </p>
+                            </div><!-- End .card-body -->
+                          </div><!-- End .card-dashboard -->
+                        </div><!-- End .col-lg-6 -->
+
+                        <div class="col-lg-6">
+                          <div class="card card-dashboard">
+                            <div class="card-body">
+                              <h3 class="card-title">Shipping Address</h3><!-- End .card-title -->
+
+                              <p>You have not set up this type of address yet.<br>
+                                <a href="#">Edit <i class="icon-edit"></i></a>
+                              </p>
+                            </div><!-- End .card-body -->
+                          </div><!-- End .card-dashboard -->
+                        </div><!-- End .col-lg-6 -->
+                      </div><!-- End .row -->
+                    </div><!-- .End .tab-pane -->
+                    <!--address End-->
+                    <!--Wallet-->
+                    <div class="tab-pane fade" id="tab-wallet" role="tabpanel" aria-labelledby="tab-wallet-link">
+                      <p>Wallet</p>
+                    </div><!-- .End .tab-pane -->
+                    <!--wallet End-->
+                    <!--coupons-->
+                    <div class="tab-pane fade" id="tab-coupons" role="tabpanel" aria-labelledby="tab-coupons-link">
+                      <p>coupons</p>
+                    </div><!-- .End .tab-pane -->
+                    <!--coupons End-->
+                  </div>
+                </div><!-- End .col-lg-9 -->
+              </div><!-- End .row -->
+            </div><!-- End .container -->
+          </div><!-- End .dashboard -->
+        </div><!-- End .page-content -->
+      </main><!-- End .main -->
+
+      <%- include('../layouts/footbar-2') %>
+        <!-- Connect Footer -->
+
+  </div><!-- End .page-wrapper -->
+
+
+
+
+  <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+  <%- include('../layouts/mobileView.ejs') %>
+
+
+
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/jquery.hoverIntent.min.js"></script>
+    <script src="assets/js/jquery.waypoints.min.js"></script>
+    <script src="assets/js/superfish.min.js"></script>
+    <script src="assets/js/owl.carousel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Main JS File -->
+    <script src="assets/js/main.js"></script>
+
+    <script>
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const nameInput = document.getElementById('user');
+        const phoneInput = document.getElementById('phone');
+        const nameError = document.getElementById('nameError');
+        const phoneError = document.getElementById('phoneError');
+        const saveButton = document.getElementById('saveButton');
+
+        function validateInputs() {
+          const nameValue = nameInput.value.trim();
+          const phoneValue = phoneInput.value.trim();
+
+          let nameValid = true;
+          let phoneValid = true;
+
+          if (nameValue === '') {
+            nameValid = false;
+            nameError.textContent = 'Name cannot be empty';
+          } else if (/[^a-zA-Z\s]/.test(nameValue)) {
+            nameValid = false;
+            nameError.textContent = 'This is can not be validate . eg : joseph ';
+          } else {
+            nameError.textContent = '';
+          }
+
+          if (!/^\d{10}$/.test(phoneValue)) {
+            phoneValid = false;
+            phoneError.textContent.trim() = 'Phone number must be 10 digits';
+          } else {
+            phoneError.textContent.trim() = '';
+          }
+
+          saveButton.disabled = !(nameValid && phoneValid);
+        }
+
+        nameInput.addEventListener('input', validateInputs);
+        phoneInput.addEventListener('input', validateInputs);
+      });
+    </script>
+    <script>
+
+
+
+      // edit profile
+
+      function editprofile(id, event) {
+        name = document.getElementById('user').value
+        phone = document.getElementById('phone').value
+        const data = {
+          name: name,
+          phone: phone
+        }
+        event.preventDefault();
+        fetch(`/editProfile?id=${id}`, {
+          method: 'post', headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+          .then((response) => {
+            if (!response.ok) {
+              console.log(error)
+            } else {
+
+              window.location.reload()
+
+
+              console.log('succes')
+            }
+          })
+      }
+function changepass(id,event){
+
+oldPass=document.getElementById('oldPass').value
+newPass=document.getElementById('newPass').value
+confmPass=document.getElementById('confmPass').value
+console.log(oldPass,newPass,confmPass)
+const data={
+oldPass:oldPass,
+newPass:newPass,
+confmPass:confmPass
+}
+event.preventDefault()
+
+  fetch(`/changePass?id=${id}`,{method:'post',headers:{
+    'Content-Type': 'application/json'
+  },
+  body:JSON.stringify(data)
+}).then((response)=>{
+  if(!response.ok){
+    console.log(error)
+  }else{
+    window.location.reload()
+
+    console.log('succes')
+  }
+})
+}
+
+
+
+      // validation for password
+      document.addEventListener('DOMContentLoaded', function () {
+        const oldPasswordInput = document.querySelector('input[name="oldPass"]');
+        const newPasswordInput = document.querySelector('input[name="newPass"]');
+        const confirmPasswordInput = document.querySelector('input[name="confPass"]');
+        const passwordError = document.getElementById('passwordError');
+        const savePasswordButton = document.getElementById('savePasswordButton');
+
+        function validatePassword() {
+          const oldPassword = oldPasswordInput.value.trim();
+          const newPassword = newPasswordInput.value.trim();
+          const confirmPassword = confirmPasswordInput.value.trim();
+
+          const isEmpty = oldPassword === '' || newPassword === '' || confirmPassword === '';
+          if (isEmpty) {
+            passwordError.textContent = 'All fields are required';
+            savePasswordButton.disabled = true;
+            return;
+          }
+
+          const passwordMatch = newPassword === confirmPassword;
+          const passwordLength = newPassword.length >= 5;
+
+          if (!passwordMatch || !passwordLength) {
+            passwordError.textContent = !passwordMatch ? 'Passwords do not match' : 'Password must be at least 5 characters';
+            savePasswordButton.disabled = true;
+          } else {
+            passwordError.textContent = '';
+            savePasswordButton.disabled = false;
+          }
+        }
+
+        oldPasswordInput.addEventListener('input', validatePassword);
+        newPasswordInput.addEventListener('input', validatePassword);
+        confirmPasswordInput.addEventListener('input', validatePassword);
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const msg = document.getElementById('msg');
+
+
+        if (msg.textContent.trim() == "Edited Successfully") {
+          Swal.fire({
+            title: 'Changed',
+            text: 'changed successfully',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+        } else if (msg.textContent.trim() == "passchanged") {
+          Swal.fire({
+            title: 'Changed',
+            text: 'changed successfully',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+        } else if (msg.textContent.trim() == "failed") {
+          Swal.fire({
+            title: 'failed',
+            text: 'changing failed',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        }
+      });
+      // address validation 
+      function validate() {
+        const address = document.getElementById('address')
+        const button = document.getElementById('savePasswordButton')
+        const error = document.getElementById('add')
+        console.log(address.textContent.trim());
+        if (address.textContent.trim() == "") {
+          error.textContent = 'enter valid'
+          button.disabled = true
+        } else {
+          error.textContent = ''
+          button.disabled = false
+        }
+      }
+
+      // add address 
+
+      function addform(id) {
+        const form = document.getElementById('ad')
+        const formData = new FormData(form)
+        const datas = {};
+        formData.forEach((value, key) => {
+          datas[key] = value;
+        });
+        fetch(`/addAddress?id=${id}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ datas }) })
+
+      }
+    </script>
+    <script>
+
+
+      function validateForm() {
+
+      }
+
+      document.querySelectorAll('.form-control').forEach(input => {
+        input.addEventListener('input', validateForm);
+      });
+
+
+      document.getElementById('addForm').addEventListener('submit', function (event) {
+        if (!validateForm()) {
+          event.preventDefault();
+        }
+      });
+
+    </script>
+
+
+    <%- include('../layouts/footer.ejs') %>

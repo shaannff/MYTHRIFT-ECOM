@@ -1,0 +1,324 @@
+<script src="sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">
+<%- include('../layouts/adminheader.ejs') %>
+
+  <div class="container-scroller">
+
+    <%- include('../layouts/adminsidebar.ejs') %>
+
+    <div class="container-fluid page-body-wrapper">
+
+        <%- include('../layouts/adminnavbar.ejs') %>
+
+      <!-- partial -->
+
+        <div class="main-panel">
+
+          <div class="content-wrapper">
+            
+              <!-- Button trigger modal -->
+<button type="button" class="btn btn-outline-primary " data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <i class="mdi mdi-upload btn-icon-prepend"></i> Add Category
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" style="justify-content: center;">Add New Category</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+        <form action="">
+        <div class="modal-body">
+            <div class="mb-3">
+                <label for="recipient-name" class="col-form-label" >Category Name:</label>
+                <div class="text-center "><p id="errs" class="text-danger  "></p> </div>
+                <input type="text" class="form-control" oninput="datacheaking(this); categoryValidation(this)" name="name" id="cateName">
+            </div>     
+        </div>
+        <div class="form-check px-5 " >
+            <input class="form-check-input" value="true" type="radio" name="radio" id="flexRadioDefault1" checked>
+            <label class="form-check-label" for="flexRadioDefault1">
+              Listed
+            </label>
+          </div>
+          <div class="form-check  px-5 ">
+            <input class="form-check-input " value="false" type="radio" name="radio" id="flexRadioDefault2" >
+            <label class="form-check-label" for="flexRadioDefault2">
+              Un Listed
+            </label>
+          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary"id="submit" data-bs-dismiss="modal" onclick="addCate()">Save changes</button>
+        </div>
+    </form>
+      </div>
+    </div>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Category Name</th>
+        <th scope="col">Status</th>
+        <th scope="col">Action</th>
+        <th scope="col"></th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <% if(category.length>0){ %>
+        <% for(let i=0;i<category.length;i++){ %>
+
+      <tr>
+        <th scope="row"><%=i+1 %></th>
+        <td>
+          <%=category[i].name  %>
+        </td>
+        <td>
+          <% if(category[i].is_listed == true){%>
+
+          <span class="text-success" id="s<%=category[i]._id %>">Listed</span>
+
+        <% }else{ %>
+
+          <span class="text-danger" id="s<%=category[i]._id %>">Unlisted</span>
+
+          <% } %>
+        </td>
+        <td>
+          <button type="button" id="s<%=category[i]._id %>" class="action btn <%=category[i].is_listed==false?'btn-outline-success ':'btn-outline-danger '  %> btn-icon-text" onclick="liststatus('<%=category[i]._id %>',this)" style="margin-right: 5px;"><%=category[i].is_listed ? 'Unlist':'List'  %></button>
+
+        </td>
+        
+        <td style="width: 20px;">
+                            
+          <!-- Edit Modal -->
+         <button type="button" class="btn btn-outline-primary btn-icon-text" style="margin-right: 5px;" data-bs-toggle="modal" data-bs-target="#editModal<%= category[i]._id %>"> Edit <i class="mdi mdi-file-check btn-icon-append"></i></button>
+         <!-- Edit Modal -->
+         <div class="modal fade" id="editModal<%= category[i]._id %>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+           <div class="modal-dialog">
+             <div class="modal-content">
+               <div class="modal-header">
+                 <h5 class="modal-title" id="editModalLabel">Edit Category</h5>
+                 <button type="button" class="btn-close btn-outline-danger " data-bs-dismiss="modal" aria-label="Close">x</button>
+               </div>
+               <div class="modal-body m-3">
+                 <input type="text" id="c<%= category[i]._id %>" placeholder="Edit your Category" value="<%= category[i].name %>" class="form-control rounded">
+               </div>
+               <div class="modal-footer">
+                 <button type="button" class="btn btn-outline-primary " data-bs-dismiss="modal">Cancel</button>
+                 <button type="button" class="btn btn-outline-success " data-bs-dismiss="modal" onclick="editcate('<%= category[i]._id %>')">Save changes</button>
+               </div>
+             </div>
+           </div>
+         </div>
+         </td>
+      </tr>
+     <% } %>
+     <% } %>
+     
+    </tbody>
+  </table>
+           
+
+          </div>
+
+        </div>
+
+    </div>
+
+</div> <!--End container scroller-->
+
+
+
+<style>
+  .swal2-popup {
+    font-size: 16px; /* Adjust font size as needed */
+   
+    background-color: #ffffff; /* Set background color */
+  }
+  .swal2-content, .swal2-title {
+     color: #067e04 !important; /* Set text color */
+  }
+  </style>
+
+
+<script>
+
+ function addCate(){
+
+const cate=document.getElementById('cateName')
+
+const radio=document.querySelector('input[name="radio"]:checked')
+
+fetch(`/admin/category?name=${cate.value}&&radio=${radio.value}`,{method:'post'})
+
+.then(response => {
+      if (response.ok) {
+        
+        sweet();
+window.location.reload()     
+                   }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+
+}
+
+
+function sweet(){
+
+Swal.fire({
+      icon: 'success',
+      title: 'Category added',
+      text: 'Category added successfully ',
+      confirmButtonText: 'Okay'
+  })
+}
+
+function datacheaking(input){
+  const error=document.getElementById('errs')
+  const button=document.querySelector('#submit')
+
+  
+fetch(`/admin/category?inp=${input.value}`,{method:'post'}).then(res=>res.json()).then(data=>{
+
+ if(data.inp){
+ button.disabled=true
+ error.textContent = 'Already Exist'
+   
+    
+ }else{
+   button.disabled=false
+   error.textContent=''
+ }
+})
+}
+
+function categoryValidation(input) {
+  
+  var value = input.value.trim(); 
+    var errorElement = document.getElementById('err');
+    const button =document.getElementById('submit')
+
+    console.log(button);
+    var letters = /^[A-Za-z ]+$/;
+
+    if (!value.match(letters)) {
+        errorElement.textContent = 'only characters';
+       
+        button.disabled = true;
+        return false;
+      }
+      
+    if (value.length < 4) {
+      
+        errorElement.textContent = 'Minimum 4 characters required.';
+        button.disabled = true;
+        return false;
+    }
+    
+
+    errorElement.textContent = ''; 
+    button.disabled = false; 
+  }
+ 
+
+
+function sweett(){
+
+Swal.fire({
+      icon: 'success',
+      title: 'Category  added',
+      text: 'Category  already added ',
+      confirmButtonText: 'Okay'
+  })
+}
+
+
+function sweet(){
+
+Swal.fire({
+      icon: 'success',
+      title: 'Category added',
+      text: 'Category added successfully ',
+      confirmButtonText: 'Okay'
+  })
+}
+
+function liststatus(id,e){
+
+  const status = document.getElementById(`s${id}`);
+  fetch(`/admin/categoryaction?id=${id}`,{
+    method:'put',
+    headers:{
+      'content-Type':'application/json'
+    }
+  }).then(response=>{
+    if(!response.ok){
+      console.log(error)
+    }
+  }).then(data=>{
+    if(e.textContent=='List'){
+      e.textContent='Unlist'
+      e.classList.remove('btn-outline-success')
+      e.classList.add('btn-outline-danger')
+      status.textContent='Listed'
+      status.classList=('text-success')
+
+    }else{ 
+       e.textContent='List'
+      e.classList.add('btn-outline-success')
+      e.classList.remove('btn-outline-danger')
+      status.textContent='Unlisted'
+      status.classList('text-danger')
+}
+    
+    
+  })
+}
+
+function editcate(id){
+  const cateid=id
+  const newName=document.getElementById('c'+id).value
+  fetch(`/admin/category?id=${id}&&value=${newName}`,{
+    method :'PUT',
+    headers:{'content-Type':'application/json'}
+  }).then(response=>{
+    if(!response.ok){
+      throw new Error('Network response  not ok')
+    }
+    return response.json
+  }).then(data=>{
+    if(data.error){
+      Swal.fire({
+        icon:'error',
+        title:'Error',
+        text:data.error,
+        confirmButtonText:'Okey'
+      })
+    }else{
+      Swal.fire({
+        icon:'success',
+        title:'Catgory Edited',
+        text:'category edited successfully',
+        confirmButtonText:'Okey'
+      }).then(result=>{
+        if(result.isConfirmed){
+          window.location.reload()
+        }
+      })
+    }
+  }).catch(error=>{
+    console.log('problem in editing category',error)
+  })
+}
+</script>
+
+
+
+<%- include('../layouts/adminfooter.ejs') %>

@@ -1,0 +1,184 @@
+<script src="sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">
+<%- include('../layouts/adminheader.ejs') %>
+
+  <div class="container-scroller">
+
+    <%- include('../layouts/adminsidebar.ejs') %>
+
+    <div class="container-fluid page-body-wrapper">
+
+        <%- include('../layouts/adminnavbar.ejs') %>
+
+      <!-- partial -->
+
+        <div class="main-panel">
+
+          <div class="content-wrapper">
+            
+
+            <div class="container-fluid ">
+              <div class="d-flex justify-content-center ">
+                <h3 class="text-info  ">Products</h3>
+                
+              </div>
+            </div>
+            <div class="container-fluid ">
+
+              <div class="d-flex justify-content-end ">
+                <form action="/admin/productsAdd" method="get">
+                  <button class="btn btn-outline-success">Add product</button>
+                </form>
+                  
+              </div>
+            </div>
+
+            <table class="table-bordered mt-2 table  bg-white  w-100" >
+                
+
+              <thead style="background-color: rgb(23, 21, 21);border-radius: 10px;" >
+               <tr class="text-center ">
+                   <th>No</th>
+                   <th>NAME</th>
+                   <th>Image</th>
+                   <th>Stock</th>
+                   <th>Price</th>
+                 
+                   <th>Category</th>
+                   <th>Status</th>
+                   <th>Action</th>
+                   
+               </tr>
+           </thead>
+           <% if (productsData.length>0) { %>
+            <% for(let i =0 ;i< productsData.length; i++) {%>
+           <tbody style="background-color: rgb(62, 57, 57);">          
+                       <tr class="text-center ">
+                           <td><%= i+1 %>  </td>
+                           <td><%= productsData[i].name %></td>
+                          
+                          <td class="">
+
+                            <div class="progress d-flex justify-content-center  h-100 w-100" style=" background-color: transparent; ">
+
+                              <% productsData[i].image.forEach(img => { %>
+          
+                                  <div class="cir bg-white " style="  display: inline-block; width: 30px; height: 30px;  border-radius: 50%; overflow: hidden;">
+                                      <img style="width: 100%; height: 100%; object-fit: cover; " src='/assets/images/mythrift/<%= img %>' alt="">
+                                  </div>
+                                      
+                              <% }); %>
+          
+                              </div>
+
+                          </td>
+                            
+                          
+                           <td><%= productsData[i].stock %> </td>
+                           <td><%= productsData[i].price %></td>
+                           <td><%= productsData[i].category.name%></td>
+
+
+
+                           <td>
+
+
+                            <% if(productsData[i].status ==true ) { %>
+
+                              <span class="text-success " id="s<%=productsData[i]._id %> ">Listed</span>
+
+                           
+                            <% } else { %>
+                              <span class="text-danger  "id="s<%=productsData[i]._id %>">Unlisted</span>
+                              <% } %>
+                           </td>
+
+                           <td>
+                            <div class="dropdown " >
+                              <button class="btn btn-outline-info   dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                               Action
+                              </button>
+                              <div class="dropdown-menu text-center " aria-labelledby="dropdownMenuButton" >
+                                
+                                
+                                
+                                <a class="dropdown-item text-primary btn" href="/admin/editproduct?id=<%= productsData[i]._id %>">Edit</a>
+
+                                <a class="dropdown-item text-danger"  href="#">Delete</a>
+                                
+                                <button type="button" id="s<%=productsData[i]._id %>"   class="px-5  btn <%=productsData[i].status==false?'btn-outline-success ':'btn-outline-danger '  %> btn-icon-text" onclick="liststatus('<%=productsData[i]._id  %>',this)" style="margin-right: 5px;"><%=productsData[i].status ? 'Unlist':'List'  %></button>
+                              </div>
+                            </div>
+                           </td>
+               
+               <% } %>
+               <% } else { %>
+                <tr>
+                  <td colspan="9" class="text-center text-danger ">Product Not Found</td>
+              </tr>
+                
+                         <% } %> 
+           
+           </tbody>
+       </table><!-- End table -->
+       <%- include('../layouts/page.ejs') %>
+ 
+
+           
+
+         
+        </div>
+
+    </div>
+
+
+</div> <!--End container scroller-->
+
+
+<script>
+
+  
+function liststatus(id,e){
+
+const status = document.getElementById(`s${id}`);
+console.log(id,'neufuen')
+fetch(`/admin/productaction?id=${id}`,{
+  method:'put',
+  headers:{
+    'content-Type':'application/json'
+  }
+}).then(response=>{
+  if(!response.ok){
+    console.log(error)
+  }
+}).then(data=>{
+  if(e.textContent=='List'){
+    window.location.reload()
+
+    e.textContent='Unlist'
+    e.classList.remove('btn-outline-success')
+    e.classList.add('btn-outline-danger')
+    status.textContent='Listed'
+    status.classList=('text-success')
+
+  }else{ 
+    window.location.reload()
+
+     e.textContent='List'
+    e.classList.add('btn-outline-success')
+    e.classList.remove('btn-outline-danger')
+    status.textContent='Unlisted'
+    status.classList('text-danger')
+
+}
+  
+  
+})
+}
+
+
+
+</script>
+
+
+<%- include('../layouts/adminfooter.ejs') %>

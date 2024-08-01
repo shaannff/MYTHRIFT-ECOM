@@ -1,0 +1,144 @@
+
+
+<%- include('../layouts/header.ejs') %>
+
+    <div class="page-wrapper">
+	
+	    <%- include('../layouts/navbar-2.ejs') %>
+        <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+               <div class="container">
+                   <ol class="breadcrumb">
+                       <li class="breadcrumb-item"><a href="/homepage">Home</a></li>
+                       <!-- <li class="breadcrumb-item"><a href="#">Pages</a></li> -->
+                       <li class="breadcrumb-item " aria-current="page">Login</li>
+                       <li class="breadcrumb-item " aria-current="page">forget Password</li>
+                       <li class="breadcrumb-item active" aria-current="page">confirm</li>
+                   </ol>
+               </div><!-- End .container -->
+           </nav><!-- End .breadcrumb-nav -->
+           <div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17" style="background-image: url('assets/images/mythrift/show.jpg')">
+            <div class="container">
+                <div class="form-box">
+                    <div class="form-tab">
+                        <ul class="nav nav-pills nav-fill" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active " id="signin-tab-2" data-toggle="tab" href="#signin-2" role="tab" aria-controls="signin-2" aria-selected="false">Forget Password</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div class="tab-pane show active" id="signin-2" role="tabpanel" aria-labelledby="signin-tab-2">
+
+                                <form id="passwordForm" action="/passwordVerify" method="post">
+                                    <div class="text-center">
+                                        <p class="text-danger" id="msg"  hidden><%= msg %></p>                                       
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">New password *</label>
+                                        <input type="password" class="form-control" id="password" name="password" style="background-color: hsla(0, 6%, 46%, 0.416);">
+                                        <div style="height: 20px;">
+                                            <p class="error-message text-danger" id="password-error"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="re_password">Confirm password *</label>
+                                        <input type="password" class="form-control" id="re_password" name="re_password" style="background-color: hsla(0, 6%, 46%, 0.416);">
+                                        <div style="height: 20px;">
+                                            <p class="error-message text-danger" id="re-password-error"></p>
+                                        </div>
+                                        <input type="email" hidden value="<%=email%>" name="email">
+                                    </div>
+                                
+                                    <div class="form-footer justify-content-center">
+                                        <button type="submit" id="btn" class="btn btn-outline-primary-2">
+                                            <span>Submit</span>
+                                            <i class="icon-long-arrow-right"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                               <!-- End .form-choice -->
+                            </div><!-- .End .tab-pane -->
+                        </div><!-- End .tab-content -->
+                    </div><!-- End .form-tab -->
+                </div><!-- End .form-box -->
+            </div><!-- End .container -->
+        </div>
+
+
+        </main>
+
+		<!-- Connect Footer -->
+		<%- include('../layouts/footbar-2') %>
+		<!-- Connect Footer -->
+     
+    </div><!-- End .page-wrapper -->
+
+
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+		<!--Connect Mobaile View-->
+        <%- include('../layouts/mobileView.ejs') %>
+		<!--Connect Mobaile View-->
+
+    <!-- Plugins JS File -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/jquery.hoverIntent.min.js"></script>
+    <script src="assets/js/jquery.waypoints.min.js"></script>
+    <script src="assets/js/superfish.min.js"></script>
+    <script src="assets/js/owl.carousel.min.js"></script>
+    <!-- Main JS File -->
+    <script src="assets/js/main.js"></script>
+	
+	
+<script>
+// sweet alert for password change 
+const msg = document.getElementById('msg')
+
+if(msg.textContent=='changed'){
+    Swal.fire({
+            title: 'password change',
+            text: 'changed successfully...!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            window.location.href = '/login';
+        });
+
+}
+
+document.getElementById("passwordForm").addEventListener("submit", function(event) {
+        var password = document.getElementById("password").value;
+        var confirmPassword = document.getElementById("re_password").value;
+        var passwordError = document.getElementById("password-error");
+        var rePasswordError = document.getElementById("re-password-error");
+        var valid = true;
+
+         
+        passwordError.textContent = "";
+        rePasswordError.textContent = "";
+
+        if (password !== confirmPassword) {
+            rePasswordError.textContent = "Passwords do not match";
+            valid = false;
+        }
+
+        //  password length
+        if (password.length < 6) {
+            passwordError.textContent = "Password must be at least 6 characters long";
+            valid = false;
+        }
+
+        
+        if (!valid) {
+            event.preventDefault();
+        }
+    });
+
+</script>
+
+
+
+
+    <%- include('../layouts/footer.ejs')%>
