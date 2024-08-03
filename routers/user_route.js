@@ -37,7 +37,7 @@ user_route.post('/passwordVerify',user_controller.passmatchsave)
 user_route.post('/logout',user_controller.logout)
 
 
-// user_route.get('/error',user_controller.error404)
+user_route.get('/error',user_controller.error404)
 
 user_route.get('/product',is_auth.isBlocked,user_controller.loadproduct)
 user_route.get('/about',is_auth.isBlocked,user_controller.loadAboutPage)
@@ -83,6 +83,7 @@ user_route.post('/razorPay',order_controller.razopay)
 user_route.post('/failedRazorpay',order_controller.failedRayorpay)
 user_route.post('/sucRazorpay',order_controller.SucRazorpay)
 user_route.post('/changeStatus',order_controller.changeProStutes)
+user_route.get('/downloadInvoice',order_controller.downloadInvoice)
 
 
 const whishlist_contriller=require('../controllers/user/whishlist_controller')

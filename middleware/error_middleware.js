@@ -11,7 +11,7 @@ const errorHandler = (err, req, res, next) => {
         
     } else {
                 
-        res.status(404).render("404", { error: err });
+        res.status(404).render("user/404", { error: err });
         
     }
     

@@ -296,6 +296,7 @@ const loadOrderDetils=async(req,res,next)=>{
             const prductdetils=order.products.map(val=>val)
 
             const orderstatues=order.products.map(val=>val.orderProStatus)
+            console.log(order,prductdetils)
 
             res.render('orderdetils',{categoryData,order,login: req.session.user,orderstatues,prductdetils})
         }else{
@@ -625,7 +626,6 @@ const failedRayorpay=async(req,res,next)=>{
 
 const SucRazorpay=async(req,res,next)=>{
     try {
-console.log('heyy')
         const userIdd = req.session.user._id;
 
         if (userIdd) {
@@ -684,12 +684,10 @@ const changeProStutes=async(req,res,next)=>{
     try {
         
         const ordIdd = req.body.ordIdd
-        console.log(ordIdd,'123456783333324444')
         
         const ord = await Order.findOne({ _id: ordIdd });
         
         const updation = await Order.findOneAndUpdate({ _id: ordIdd }, { $set: { 'products.$[].orderProStatus': 'shipped' } });
-        console.log('222222heey',updation,ord)
 
         //  Stock Managing :-
 
@@ -715,7 +713,17 @@ const changeProStutes=async(req,res,next)=>{
         
     }
 }
+const downloadInvoice=async(req,res,next)=>{
+    try {
+        const ordId=req.query.id
+        const ordData = await Order.find({ _id: ordId }).populate('products.productId UserId')
+        console.log(ordData)
+        res.render('invoice',{ordData})
+    } catch (error) {
+        next(error, req, res)
 
+    }
+}
 module.exports={
     loadCheakOut,
     cheakOutAddAddress,
@@ -729,7 +737,8 @@ module.exports={
     razopay,
     failedRayorpay,
     SucRazorpay,
-    changeProStutes
+    changeProStutes,
+    downloadInvoice
  
 }
 

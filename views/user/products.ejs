@@ -589,6 +589,7 @@ title: "Added TO Wishlist"
 
 	
 function search(val) {
+	console.log(12)
     const cards = document.getElementById('cards');
     const result = document.getElementById('result');
     
@@ -607,42 +608,57 @@ function search(val) {
             result.classList.add('text-danger');
         } else {
             result.classList.remove('justify-content-center');
-            result.innerHTML = `${data.map((product, i) => (
-                `<div id="cards" class="col-6 col-md-4 col-lg-4 ">
-                    <div class="product product-7 text-center">
-                        <figure class="product-media">
-                            <span class="product-label label-new">New</span>
-                            <a href='/productdetails?id=${product._id}'>
-                                <img src="/assets/images/mythrift/${product.image[0]}" alt="Product image" class="product-image">
-                            </a>
+			result.innerHTML= `${data.map((val,i) => (`
+					
+					<div class="col-6 col-md-4 col-lg-4" id="cards">
+	
+												<div class="product product-7 text-center">
+	
+													<figure class="product-media">
+														
+														<!-- <span class="product-label label-new">New</span> -->
+														<input hidden value="${val.stock}" id="stock">
+	
+														<a href="/productDetails?id=${val._id}">
+	
+															<img src="/assets/images/mythrift/${val.image[0]}" alt="Product image" class="product-image">
+	
+														</a>
+	
+														<div class="product-action-vertical">
+															<a onclick="addWishlist('${val._id}')" class="btn-product-icon btn-wishlist btn-expandable"><span >add to wishlist</span></a>
+															<!-- <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a> -->
+															<!-- <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a> -->
+														</div><!-- End .product-action-vertical -->
+	
+														<div class="product-action">
+															<button class="btn-product btn-cartv border-0" id="btns" onclick="addCart('${val._id}')" style="cursor: pointer;"><span id="crt">add to cart</span></button>
+														</div><!-- End .product-action -->
+	
+													</figure><!-- End .product-media -->
+	
+													<div class="product-body">
+	
+														<div class="product-cat">
+															<a href="#">${val.name}</a>
+														   </div><!-- End .product-cat -->
+	
+														<h3 class="product-title"><a href="/category">${val.category.name}</a></h3><!-- End .product-title -->
+	
+														<div class="product-price d-flex gap-4 ">
 
-                            <div class="product-action-vertical">
-                                <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                            </div><!-- End .product-action-vertical -->
-                            <input hidden value="${product.stock}" id="stock">
-                            <div class="product-action">
-                                <button onclick="addCart('${product._id}')" id="btns" class="btn-product btn-cart border-0 " style="cursor: pointer;"><span id="crt">add to cart</span></button>
-                            </div><!-- End .product-action -->
-                        </figure><!-- End .product-media -->
+															<div class="${val.discount} 0 ? 'text-decoration-line-through text-danger opacity-50' : '' %>"> $${val.price}.00 </div>
+	
+													 
+													</div>
+	
+														
+	
+												</div><!-- End .product-body -->
+											</div><!-- End .product -->
+										</div><!-- End .col-sm-6 col-lg-4 -->
 
-                        <div class="product-body">
-                            <div class="product-cat">
-                                <a href="#">${product.name}</a>
-                            </div><!-- End .product-cat -->
-                            <h3 class="product-title"><a href="/products">${product.category.name}</a></h3><!-- End .product-title -->
-                            <div class="product-price">
-                                $${product.price}.00
-                            </div><!-- End .product-price -->
-                            <div class="ratings-container">
-                                <div class="ratings">
-                                    <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
-                                </div><!-- End .ratings -->
-                                <span class="ratings-text">( 2 Reviews )</span>
-                            </div><!-- End .rating-container -->
-                        </div><!-- End .product-body -->
-                    </div><!-- End .product -->
-                </div>`
-            )).join('')}`;
+		`)).join('')}`
         }
     });
 }
@@ -650,7 +666,6 @@ function search(val) {
 
 function priceFilter(){
 
-console.log('heeyy')
 const min = document.getElementById('min-price').value
 const max = document.getElementById('max-price').value
 
