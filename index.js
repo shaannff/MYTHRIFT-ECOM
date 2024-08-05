@@ -62,6 +62,6 @@ app.get('*', (req, res) => {
     // res.status(404).send('Page not found');
 });
 
-const PORT = process.env.PORT || 7003;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => { console.log(`Server Running http://localhost:${PORT}`)});

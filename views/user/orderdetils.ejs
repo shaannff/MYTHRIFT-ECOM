@@ -172,10 +172,11 @@
 
                               $<%= product.price %>
 
-                              <p class="fs-6 <%= product.coupenDis <= 0 ? '' : 'text-success' %>"><%= product.coupenDis <= 0 ? '' : 'Coupen Applied' %></p>
+                              <!-- <p class="fs-6 <%=// orderstatues.coupenDis >= 0 ? '' : 'text-success' %>"><%=// orderstatues.coupenDis >= 0 ? '' : 'Coupen Applied' %></p> -->
 
                             </td>
 
+                            
 
                             <td>
                               <% if(order.payment == 'Online Payment' && product.orderProStatus== 'pending'){%>

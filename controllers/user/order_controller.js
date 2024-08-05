@@ -296,7 +296,6 @@ const loadOrderDetils=async(req,res,next)=>{
             const prductdetils=order.products.map(val=>val)
 
             const orderstatues=order.products.map(val=>val.orderProStatus)
-            console.log(order,prductdetils)
 
             res.render('orderdetils',{categoryData,order,login: req.session.user,orderstatues,prductdetils})
         }else{
