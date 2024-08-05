@@ -27,7 +27,7 @@ const addProduct = async (req, res, next) => {
   try {
     const listedcategory = await category.find({ is_listed: true })
     console.log('profuctr add')
-    res.render('productadd1', { listcategory: listedcategory })
+    res.render('productAdd', { listcategory: listedcategory })
   } catch (error) {
     console.log(error.message);
     next(error,req,res) 
