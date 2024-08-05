@@ -29,6 +29,7 @@ const addProduct = async (req, res, next) => {
     console.log('profuctr add')
     res.render('productadd1', { listcategory: listedcategory })
   } catch (error) {
+    console.log(error.message);
     next(error,req,res) 
   }
 }
