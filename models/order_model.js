@@ -63,7 +63,7 @@ const Order=mongoose.Schema({
             orderProStatus:{
                 type: String,
                 required:true,
-            enum: ['pending', 'shipped', 'delivered','canceled','return'], 
+            enum: ['pending', 'shipped', 'delivered','canceled','return','payment pending'], 
             default: 'pending'
             },
             canceled: { type: Boolean, default: false },

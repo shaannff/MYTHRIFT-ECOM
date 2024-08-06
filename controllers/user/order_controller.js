@@ -584,12 +584,21 @@ const failedRayorpay=async(req,res,next)=>{
 
         const product = cartt.product
 
+
         const { userName, name, city, state, pincode, phone } = address?.addresss?.[0] ?? {};
 
         const getFailedOrd = await Order.create({
 
             UserId: userIdd,
             orderAmount: cartt.TotalPrice,
+            products: cartt.product.map((val) => ({
+
+                productId: val.productId,
+                quantity: val.quantity,
+                price: val.price,
+                orderProStatus: 'payment pending'
+
+            })),
 
             deliveryAddress: {
                 name: userName,
@@ -602,13 +611,14 @@ const failedRayorpay=async(req,res,next)=>{
 
             payment: peymentMeth,
             orderDate: Date.now(),
-            products: product,
             coupenDis: cartt.coupenDiscount,
             percentage: cartt.percentage
         })
 
         await Cart.updateOne({userId : userIdd} , {$unset : {products : 1 , coupenDiscount : 0, percentage:0 , TotalPrice :0}});
         console.log(getFailedOrd)
+
+
 
         if (getFailedOrd) {
             
@@ -686,7 +696,7 @@ const changeProStutes=async(req,res,next)=>{
         
         const ord = await Order.findOne({ _id: ordIdd });
         
-        const updation = await Order.findOneAndUpdate({ _id: ordIdd }, { $set: { 'products.$[].orderProStatus': 'shipped' } });
+        const updation = await Order.findOneAndUpdate({ _id: ordIdd }, { $set: { 'products.$[].orderProStatus': 'pending' } });
 
         //  Stock Managing :-
 
@@ -723,6 +733,8 @@ const downloadInvoice=async(req,res,next)=>{
 
     }
 }
+
+
 module.exports={
     loadCheakOut,
     cheakOutAddAddress,

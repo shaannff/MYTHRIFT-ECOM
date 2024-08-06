@@ -179,7 +179,7 @@
                             
 
                             <td>
-                              <% if(order.payment == 'Online Payment' && product.orderProStatus== 'pending'){%>
+                              <% if(order.payment == 'Online Payment' && product.orderProStatus== 'payment pending'){%>
                                 <button type="button" class="btn btn-primary" onclick="razorPayy('<%= order.UserId %>' , '<%= order.orderAmount %>' , '<%= order._id %>')">
 
                                   <span >Place Order</span>
